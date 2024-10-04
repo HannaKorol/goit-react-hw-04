@@ -11,16 +11,19 @@ export default function App() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false); // lectioon 1 (50:28)
   const [error, setError] = useState(false);
+  const [page, setPage] = useState(0);
+  const [query, setQuery] = useState('css');
 
   //вся логіка запиту і обробки службового стейту (isLoading, error) виконуєится в useEffect з залежностями [query, page]
+  //Функція буде викликана кожен раз при зміна номера сторінки:
   useEffect(() => {
     const getData = async () => {
       try {
         setError(false);             // при новому запиті помилка зникає
         setLoading(true);
-        const data = await fetchImages();
+        const data = await fetchImages(page, query);
         setLoading(false);
-        setImages(data.hits);
+        setImages(prev => [...prev, ...data.hits]);
       } catch {
         setError(true);
       } finally {
@@ -28,14 +31,26 @@ export default function App() {
       }
     };
     getData();
-  }, []);
+  }, [page, query]);
+
+  const handleChangePage = () => {
+    setPage(prev => prev +1 )          //коли натискають на кнопку - збільшується стейт
+  }
+
+  //Скидаємо збереженні сторінки і запити пошуку:
+  const handleSetQuery = (topic) {
+    setQuery(topic);
+    setImages([]); 
+    setPage(0); //скидання сторінок якщо ми шукаємо по іншій темі пошуку
+}
 
   return (
     <div>
-      <SearchBar onSearch={handleSearch} />
+      <SearchBar setQuery={handleSetQuery} />
       {loading && <Loader />}
-      {error && <ErrorMessage/>}
+      {error && <ErrorMessage />}
       {images.length > 0 && <ImagesGallery images={images} />}
+      <button onClick={handleChangePage}>Load more</button>
     </div>
   );
 }

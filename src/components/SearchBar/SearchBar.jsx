@@ -1,23 +1,51 @@
-//Створимо компонент форми пошуку:
+// Варіант 1 - Створимо компонент форми пошуку:
 
-export default function SearchBar({ onSearch }) {
+import { Formik } from "formik";
+
+const SearchBar = ({ setQuery }) => {
+    const initialValues = {
+        query: '',
+    };
+
+    const handleSubmit = values => {
+        console.log(values);
+        setQuery(values.query);
+    };
+    return (
+        <div>
+            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+                <Form>
+                    <Field name='query' />
+                    <button type='submit'>Search</button>
+                </Form>
+            </Formik>
+        </div>
+    );
+};
+export default SearchBar;
+
+
+
+// Варіант 2 - Створимо компонент форми пошуку:
+
+/* export default function SearchBar({ onSearch }) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const form = evt.target;
-    const topic = form.elements.topic.value;
+    const topic = form.elements.topic.value; */
 
-    /* Якщо текстове поле порожнє, виводимо повідомлення і припиняємо виконання функції. */
-    if (form.elements.topic.value.trim() === "") {
+/* Якщо текстове поле порожнє, виводимо повідомлення і припиняємо виконання функції. */
+/*     if (form.elements.topic.value.trim() === "") {
       alert("Please enter search term");
       return;
-    }
+    } */
 
-    /* У протилежному випадку викликаємо пропс і передаємо йому значення поля */
-    onSearch(topic);
+/* У протилежному випадку викликаємо пропс і передаємо йому значення поля */
+/*     onSearch(topic);
     form.reset;
   };
-
-  return (
+ */
+/*   return (
     <header>
       <form onSubmit={handleSubmit}>
         <input
@@ -32,3 +60,4 @@ export default function SearchBar({ onSearch }) {
     </header>
   );
 }
+ */

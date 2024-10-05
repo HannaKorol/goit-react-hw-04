@@ -12,11 +12,14 @@ export default function App() {
   const [loading, setLoading] = useState(false); // lectioon 1 (50:28)
   const [error, setError] = useState(false);
   const [page, setPage] = useState(0);
-  const [query, setQuery] = useState('css');
+  const [query, setQuery] = useState('');
 
   //вся логіка запиту і обробки службового стейту (isLoading, error) виконуєится в useEffect з залежностями [query, page]
   //Функція буде викликана кожен раз при зміна номера сторінки:
   useEffect(() => {
+    if (!query) {
+      return;
+    }
     const getData = async () => {
       try {
         setError(false);             // при новому запиті помилка зникає
@@ -49,9 +52,21 @@ export default function App() {
       <SearchBar setQuery={handleSetQuery} />
       {loading && <Loader />}
       {error && <ErrorMessage />}
-      {images.length > 0 && <ImagesGallery images={images} />}
+      {images.length > 0 && <ImageGallery images={images} />}
       <button onClick={handleChangePage}>Load more</button>
     </div>
+
+    // Відображення номера сторінки для вибору !! Корисна відмальовка
+   /*  <div>
+   {Array(10)
+   .fill('')
+   .map((_, i) =>(   //(item, index, array, _ означає що це не потрібно)
+    <button key={i} onClick={() => setPage(i + 1)}> 
+    {i+1}
+    </button>
+    ))
+   }
+   </div> */
   );
 }
 

@@ -1,6 +1,7 @@
 // Варіант 1 - Створимо компонент форми пошуку:
 
 import { Formik } from "formik";
+import toast from "react-hot-toast";
 
 const SearchBar = ({ setQuery }) => {
     const initialValues = {
@@ -11,6 +12,11 @@ const SearchBar = ({ setQuery }) => {
         console.log(values);
         setQuery(values.query);
     };
+
+    if (setQuery === "") {
+    return toast.error("Please enter text to search for images.");
+}
+
     return (
         <div>
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>

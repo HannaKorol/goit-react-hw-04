@@ -6,6 +6,7 @@ import SearchBar from "./SearchBar/SearchBar.jsx";
 import ImageGallery from "./ImageGallery/ImageGallery.jsx";
 import "./App.css";
 import toast, { Toaster } from "react-hot-toast";
+import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn.jsx";
 
 //1)HTTP-запити можна виконувати як за подією(при кліку на елементі чи відправці форми) або при монтажі компонента. 2-варіант - використовується ефект - оскільки компонент є в ДОМ і готовий оновлювати стан. Але Оскільки тепер користувач сам вводить рядок для пошуку статей, нам не потрібний ефект.
 //2)Форма пошуку рендериться в компоненті App, а функція handleSearch буде відповідати за код, який необхідно виконати при сабміті форми.
@@ -40,9 +41,10 @@ export default function App() {
     getData();
   }, [page, query]);
 
-  const handleChangePage = () => {
-    setPage((prev) => prev + 1); //коли натискають на кнопку - збільшується стейт
-  };
+
+const handleChangePage = () => {
+  setPage((prev) => prev + 1); //коли натискають на кнопку - збільшується state -  setPage
+};
 
   //Скидаємо збереженні сторінки і запити пошуку:
   const handleSetQuery = (topic) => {
@@ -58,7 +60,7 @@ export default function App() {
       {loading && <Loader />}
       {error && <ErrorMessage />}
       {images.length > 0 && <ImageGallery images={images} />}
-      <button onClick={handleChangePage}>Load more</button>
+      <LoadMoreBtn onClick={handleChangePage} />
     </div>
   );
 }

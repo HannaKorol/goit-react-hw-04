@@ -2,6 +2,7 @@
 
 import { Field, Form, Formik } from "formik";
 import toast from "react-hot-toast";
+import s from "./SearchBar.module.css"
 
 const SearchBar = ({ setQuery }) => {
   const initialValues = {
@@ -21,10 +22,10 @@ const SearchBar = ({ setQuery }) => {
     <div>
       <header>
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-            <Form>
-              <Field name="query" placeholder="Enter search term..." />
-              <button type="submit">Search</button>
-            </Form>
+          <Form className={s.form}>
+            <Field className={s.input} name="query" placeholder="Enter search term..." />
+            <button className={s.button} type="submit">Search</button>
+          </Form>
         </Formik>
       </header>
     </div>

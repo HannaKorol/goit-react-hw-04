@@ -6,7 +6,7 @@ const fetchImages = async (page = 1, query = "") => {
             client_id: "76GsQFmCJ1YbYEygNigwaTkN0s0MvQh74iikP170ZS0",
             query: query,
             page: page,
-            per_page: 7,
+            per_page: 12,
         },
     });
     return data.results; // Just return the data here

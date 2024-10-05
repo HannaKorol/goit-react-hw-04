@@ -5,7 +5,7 @@ import fetchImages from "../Services/api.js";
 import SearchBar from "./SearchBar/SearchBar.jsx";
 import ImageGallery from "./ImageGallery/ImageGallery.jsx";
 import "./App.css";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn.jsx";
 
 //1)HTTP-запити можна виконувати як за подією(при кліку на елементі чи відправці форми) або при монтажі компонента. 2-варіант - використовується ефект - оскільки компонент є в ДОМ і готовий оновлювати стан. Але Оскільки тепер користувач сам вводить рядок для пошуку статей, нам не потрібний ефект.

@@ -1,36 +1,36 @@
 // Варіант 1 - Створимо компонент форми пошуку:
 
-import { Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import toast from "react-hot-toast";
 
 const SearchBar = ({ setQuery }) => {
-    const initialValues = {
-        query: '',
-    };
+  const initialValues = {
+    query: "",
+  };
 
-    const handleSubmit = values => {
-        console.log(values);
-        setQuery(values.query);
-    };
+  const handleSubmit = (values) => {
+    if (!values.query.trim()) {
+      toast.error("Please enter text to search for images.");
+    } else {
+      setQuery(values.query);
+    }
+  };
 
-    if (setQuery === "") {
-    return toast.error("Please enter text to search for images.");
-}
 
-    return (
-        <div>
-            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-                <Form>
-                    <Field name='query' />
-                    <button type='submit'>Search</button>
-                </Form>
-            </Formik>
-        </div>
-    );
+  return (
+    <div>
+      <header>
+        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+          <Form>
+            <Field name="query" placeholder="Enter search term..." />
+            <button type="submit">Search</button>
+          </Form>
+        </Formik>
+      </header>
+    </div>
+  );
 };
 export default SearchBar;
-
-
 
 // Варіант 2 - Створимо компонент форми пошуку:
 

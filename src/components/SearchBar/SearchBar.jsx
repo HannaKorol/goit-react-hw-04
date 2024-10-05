@@ -8,23 +8,23 @@ const SearchBar = ({ setQuery }) => {
     query: "",
   };
 
-  const handleSubmit = (values) => {
-    if (!values.query.trim()) {
-      toast.error("Please enter text to search for images.");
-    } else {
-      setQuery(values.query);
-    }
-  };
+ const handleSubmit = (values) => {
+   if (!values.query.trim()) {
+     toast.error("Please enter text to search for images."); // Show error toast
+   } else {
+     setQuery(values.query); // Set the query when valid
+   }
+ };
 
 
   return (
     <div>
       <header>
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          <Form>
-            <Field name="query" placeholder="Enter search term..." />
-            <button type="submit">Search</button>
-          </Form>
+            <Form>
+              <Field name="query" placeholder="Enter search term..." />
+              <button type="submit">Search</button>
+            </Form>
         </Formik>
       </header>
     </div>

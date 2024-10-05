@@ -5,6 +5,7 @@ import fetchImages from "../Services/api.js";
 import SearchBar from "./SearchBar/SearchBar.jsx";
 import ImageGallery from "./ImageGallery/ImageGallery.jsx";
 import "./App.css";
+import toast, { Toaster } from "react-hot-toast";
 
 //1)HTTP-запити можна виконувати як за подією(при кліку на елементі чи відправці форми) або при монтажі компонента. 2-варіант - використовується ефект - оскільки компонент є в ДОМ і готовий оновлювати стан. Але Оскільки тепер користувач сам вводить рядок для пошуку статей, нам не потрібний ефект.
 //2)Форма пошуку рендериться в компоненті App, а функція handleSearch буде відповідати за код, який необхідно виконати при сабміті форми.
@@ -12,7 +13,7 @@ export default function App() {
   const [images, setImages] = useState([]); //is initialized as an empty array because it will store the data fetched from the API and then show it in our Result Section
   const [loading, setLoading] = useState(false); // lectioon 1 (50:28)
   const [error, setError] = useState(false);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [query, setQuery] = useState(""); //it will be used to store the input from the search bar (and that is also a string).
 
   //вся логіка запиту і обробки службового стейту (isLoading, error) виконуєится в useEffect з залежностями [query, page]
@@ -20,9 +21,8 @@ export default function App() {
   //Використовуємо UseEffect тому що треба робити запит після рендерингу всього компонента.
   //Функція буде викликана кожен раз при зміна номера сторінки:
   useEffect(() => {
-    if (!query) {
-      return;
-    }
+    if (!query) return;
+  
     const getData = async () => {
       try {
         setError(false); // при новому запиті помилка зникає
@@ -48,11 +48,12 @@ export default function App() {
   const handleSetQuery = (topic) => {
     setQuery(topic);
     setImages([]);
-    setPage(0); //скидання сторінок якщо ми шукаємо по іншій темі пошуку
+    setPage(1); //скидання сторінок якщо ми шукаємо по іншій темі пошуку
   };
 
   return (
     <div>
+      <Toaster />
       <SearchBar setQuery={handleSetQuery} />
       {loading && <Loader />}
       {error && <ErrorMessage />}

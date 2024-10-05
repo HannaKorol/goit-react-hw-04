@@ -1,9 +1,11 @@
 import React from "react";
+import s from "./ImageCard.module.css"
 
-const ImageCard = () => {
+
+const ImageCard = ({image}) => {
   return (
-    <div>
-      <img src="" alt="" />
+    <div className={s.photo}>
+      <img src={image.urls.small} alt="unsplash images" />
     </div>
   );
 };

@@ -14,6 +14,8 @@ export default function App() {
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState(""); //it will be used to store the input from the search bar (and that is also a string).
+  const [selectedImage, setSelectedImage] = useState(null); // State for selected image
+  const [isModalOpen, setIsModalOpen] = useState(false);    
 
   //1)HTTP-запити можна виконувати як за подією(при кліку на елементі чи відправці форми) або при монтажі компонента. 2-варіант - використовується ефект - оскільки компонент є в ДОМ і готовий оновлювати стан. Але Оскільки тепер користувач сам вводить рядок для пошуку статей, нам не потрібний ефект.
   //вся логіка запиту і обробки службового стейту (isLoading, error) виконуєится в useEffect з залежностями [query, page]
@@ -50,6 +52,16 @@ export default function App() {
     setPage(1); //скидання сторінок якщо ми шукаємо по іншій темі пошуку
   };
 
+  const handleImageClick = (imageUrl) => {
+    setSelectedImage(imageUrl); // Update the selected image
+    setIsModalOpen(true); // Open the modal
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Close the modal
+    setSelectedImage(null); // Clear the selected image
+  };
+
   return (
     <div>
       <Toaster />
@@ -58,18 +70,11 @@ export default function App() {
       {error && <ErrorMessage />}
       {images.length > 0 && <ImageGallery images={images} />}
       <LoadMoreBtn onClick={handleChangePage} />
+      <ImageGallery onImageClick={handleImageClick} />
+      {isModalOpen && <Modal imageUrl={selectedImage} onClose={closeModal} />}
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
 
 // Відображення номера сторінки для вибору !! Корисна відмальовка
 /*  <div>

@@ -18,7 +18,6 @@ export default function App() {
   const [query, setQuery] = useState(""); //it will be used to store the input from the search bar (and that is also a string).
 
   //вся логіка запиту і обробки службового стейту (isLoading, error) виконуєится в useEffect з залежностями [query, page]
-
   //Використовуємо UseEffect тому що треба робити запит після рендерингу всього компонента.
   //Функція буде викликана кожен раз при зміна номера сторінки:
   useEffect(() => {
@@ -64,6 +63,16 @@ const handleChangePage = () => {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
 // Відображення номера сторінки для вибору !! Корисна відмальовка
 /*  <div>
    {Array(10)

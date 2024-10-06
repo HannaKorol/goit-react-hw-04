@@ -66,13 +66,15 @@ export default function App() {
   return (
     <div>
       <SearchBar setQuery={handleSetQuery} />
-      <Toaster />
+      <Toaster position="top-right" reverseOrder={false} />
       {loading && <Loader />}
       {error && <ErrorMessage />}
       {images.length > 0 && (
         <ImageGallery images={images} onImageClick={handleImageClick} />
       )}
-      <LoadMoreBtn onClick={handleChangePage} />
+      {images.length > 0 && !loading && (
+        <LoadMoreBtn onClick={handleChangePage} />
+      )}
       {isModalOpen && (
         <ImageModal
           imageUrl={selectedImage}

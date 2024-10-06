@@ -7,6 +7,7 @@ import ImageGallery from "./ImageGallery/ImageGallery.jsx";
 import "./App.css";
 import { Toaster } from "react-hot-toast";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn.jsx";
+import ImageModal from "./ImageModal/ImageModal.jsx";
 
 export default function App() {
   const [images, setImages] = useState([]); //is initialized as an empty array because it will store the data fetched from the API and then show it in our Result Section
@@ -15,7 +16,7 @@ export default function App() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState(""); //it will be used to store the input from the search bar (and that is also a string).
   const [selectedImage, setSelectedImage] = useState(null); // State for selected image
-  const [isModalOpen, setIsModalOpen] = useState(false);    
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   //1)HTTP-запити можна виконувати як за подією(при кліку на елементі чи відправці форми) або при монтажі компонента. 2-варіант - використовується ефект - оскільки компонент є в ДОМ і готовий оновлювати стан. Але Оскільки тепер користувач сам вводить рядок для пошуку статей, нам не потрібний ефект.
   //вся логіка запиту і обробки службового стейту (isLoading, error) виконуєится в useEffect з залежностями [query, page]
@@ -64,14 +65,21 @@ export default function App() {
 
   return (
     <div>
-      <Toaster />
       <SearchBar setQuery={handleSetQuery} />
+      <Toaster />
       {loading && <Loader />}
       {error && <ErrorMessage />}
-      {images.length > 0 && <ImageGallery images={images} />}
+      {images.length > 0 && (
+        <ImageGallery images={images} onImageClick={handleImageClick} />
+      )}
       <LoadMoreBtn onClick={handleChangePage} />
-      <ImageGallery onImageClick={handleImageClick} />
-      {isModalOpen && <Modal imageUrl={selectedImage} onClose={closeModal} />}
+      {isModalOpen && (
+        <ImageModal
+          imageUrl={selectedImage}
+          onRequestClose={closeModal}
+          isOpen={isModalOpen}
+        />
+      )}
     </div>
   );
 }

@@ -27,6 +27,10 @@
 .input {
       padding: .375rem .75rem;
         border: 1px solid #bdbdbd;
+}
 
+.searchContainer {
+  margin: 0px auto;
+  padding: 20px;
 }
 

@@ -1,13 +1,13 @@
 import ImageCard from "../ImageCard/ImageCard";
 import s from "./ImageGallery.module.css"
-import ImageModal from "../ImageModal/ImageModal";
 
-const ImageGallery = ({ image, onImageClick }) => {
+
+const ImageGallery = ({ images, onImageClick }) => {
   return (
     <ul className={s.list}>
       {images.map((image) => (
         <li key={image.id}>
-          <ImageCard image={image} onClick={() => onImageClick(image.largeUrl)} />
+          <ImageCard image={image} onClick={() => onImageClick(image.urls.full)} />
         </li>
       ))}
     </ul>

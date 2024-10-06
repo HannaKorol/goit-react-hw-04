@@ -19,7 +19,7 @@ const SearchBar = ({ setQuery }) => {
 
 
   return (
-    <div>
+    <div className={s.searchContainer}>
       <header>
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           <Form className={s.form}>

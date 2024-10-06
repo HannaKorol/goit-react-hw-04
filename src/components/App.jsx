@@ -8,8 +8,6 @@ import "./App.css";
 import { Toaster } from "react-hot-toast";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn.jsx";
 
-//1)HTTP-запити можна виконувати як за подією(при кліку на елементі чи відправці форми) або при монтажі компонента. 2-варіант - використовується ефект - оскільки компонент є в ДОМ і готовий оновлювати стан. Але Оскільки тепер користувач сам вводить рядок для пошуку статей, нам не потрібний ефект.
-//2)Форма пошуку рендериться в компоненті App, а функція handleSearch буде відповідати за код, який необхідно виконати при сабміті форми.
 export default function App() {
   const [images, setImages] = useState([]); //is initialized as an empty array because it will store the data fetched from the API and then show it in our Result Section
   const [loading, setLoading] = useState(false); // lectioon 1 (50:28)
@@ -17,19 +15,20 @@ export default function App() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState(""); //it will be used to store the input from the search bar (and that is also a string).
 
+  //1)HTTP-запити можна виконувати як за подією(при кліку на елементі чи відправці форми) або при монтажі компонента. 2-варіант - використовується ефект - оскільки компонент є в ДОМ і готовий оновлювати стан. Але Оскільки тепер користувач сам вводить рядок для пошуку статей, нам не потрібний ефект.
   //вся логіка запиту і обробки службового стейту (isLoading, error) виконуєится в useEffect з залежностями [query, page]
   //Використовуємо UseEffect тому що треба робити запит після рендерингу всього компонента.
-  //Функція буде викликана кожен раз при зміна номера сторінки:
+  //Функція буде викликана кожен раз при зміні номера сторінки:
   useEffect(() => {
     if (!query) return;
-  
+
     const getData = async () => {
       try {
         setError(false); // при новому запиті помилка зникає
         setLoading(true);
         const data = await fetchImages(page, query);
         setLoading(false);
-        setImages(prev => [...prev, ...data]);
+        setImages((prev) => [...prev, ...data]);
       } catch {
         setError(true);
       } finally {
@@ -40,10 +39,9 @@ export default function App() {
     getData();
   }, [page, query]);
 
-
-const handleChangePage = () => {
-  setPage((prev) => prev + 1); //коли натискають на кнопку - збільшується state -  setPage
-};
+  const handleChangePage = () => {
+    setPage((prev) => prev + 1); //коли натискають на кнопку - збільшується state -  setPage
+  };
 
   //Скидаємо збереженні сторінки і запити пошуку:
   const handleSetQuery = (topic) => {

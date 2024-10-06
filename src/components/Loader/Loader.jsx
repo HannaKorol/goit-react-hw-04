@@ -1,9 +1,10 @@
 import React from "react";
 import { Grid } from "react-loader-spinner";
+import s from "./Loader.module.css";
 
 const Loader = () => {
   return (
-    <div>
+    <div className={s.loader}>
       <Grid
         visible={true}
         height="80"
